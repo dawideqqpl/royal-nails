@@ -1,5 +1,4 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
 
-Sitemap: https://royal-nails.pl/sitemap.xml
+Sitemap: https://royalnails.pl/sitemap.xml
