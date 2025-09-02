@@ -4,32 +4,40 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#4e5653" />
-    <meta name="description" content="Royal Nails - Profesjonalny salon manicure i pedicure w Katowicach. Oferujemy kompleksowe usługi stylizacji paznokci, manicure hybrydowy, pedicure podologiczny i wiele więcej." />
-    <meta name="keywords" content="manicure Katowice, pedicure Katowice, salon paznokci, stylizacja paznokci, hybryda, żel, Royal Nails" />
-    <meta name="author" content="Royal Nails Studio" />
+    <meta name="theme-color" content="#e69bb9" />
+    <meta name="description" content="Royal Nails - Profesjonalne studio paznokci i urody w Katowicach. Manicure, pedicure, stylizacja żelowa i usługi podologiczne." />
+    <meta name="keywords" content="manicure, pedicure, paznokcie, Katowice, salon urody, hybryda, żel, podologia" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://royalnails.pl/" />
-    <meta property="og:title" content="Royal Nails - Salon Manicure i Pedicure Katowice" />
-    <meta property="og:description" content="Profesjonalny salon paznokci w Katowicach. Manicure, pedicure, stylizacja żelowa i hybrydowa. Umów wizytę online!" />
+    <meta property="og:title" content="Royal Nails - Studio Paznokci i Urody" />
+    <meta property="og:description" content="Profesjonalne usługi manicure i pedicure w eleganckim salonie w Katowicach" />
     <meta property="og:image" content="%PUBLIC_URL%/logo.png" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://royalnails.pl/" />
-    <meta property="twitter:title" content="Royal Nails - Salon Manicure i Pedicure Katowice" />
-    <meta property="twitter:description" content="Profesjonalny salon paznokci w Katowicach. Manicure, pedicure, stylizacja żelowa i hybrydowa. Umów wizytę online!" />
+    <meta property="twitter:title" content="Royal Nails - Studio Paznokci i Urody" />
+    <meta property="twitter:description" content="Profesjonalne usługi manicure i pedicure w eleganckim salonie w Katowicach" />
     <meta property="twitter:image" content="%PUBLIC_URL%/logo.png" />
     
-    <!-- Structured Data -->
+    <title>Royal Nails - Studio Paznokci i Urody | Katowice</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="%PUBLIC_URL%/logo.png" as="image" />
+    
+    <!-- Schema.org structured data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "BeautySalon",
       "name": "Royal Nails Studio Paznokci i Urody",
-      "description": "Profesjonalny salon manicure i pedicure w Katowicach",
+      "description": "Profesjonalne studio paznokci i urody w Katowicach",
+      "url": "https://royalnails.pl",
+      "telephone": "+48732676016",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "1 Maja 15",
@@ -37,29 +45,29 @@
         "postalCode": "40-224",
         "addressCountry": "PL"
       },
-      "telephone": "+48732676016",
-      "openingHours": [
-        "Mo-Fr 08:00-17:00",
-        "Sa 08:00-14:00"
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "08:00",
+          "closes": "17:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "08:00",
+          "closes": "14:00"
+        }
       ],
-      "url": "https://royalnails.pl",
       "sameAs": [
         "https://www.instagram.com/royal_nails_studio_paznokci/",
-        "https://www.facebook.com/p/Royal-Nails-Studio-Paznokci-i-Urody-100039030925035/",
-        "https://booksy.com/pl-pl/70992_royal-nails-studio-paznokci_paznokcie_11597_katowice"
+        "https://www.facebook.com/p/Royal-Nails-Studio-Paznokci-i-Urody-100039030925035/"
       ]
     }
     </script>
-    
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <title>Royal Nails - Salon Manicure i Pedicure Katowice | Stylizacja Paznokci</title>
   </head>
   <body>
-    <noscript>Potrzebujesz JavaScript aby wyświetlić tę stronę.</noscript>
+    <noscript>Potrzebujesz włączonego JavaScript aby wyświetlić tę stronę.</noscript>
     <div id="root"></div>
   </body>
 </html>
