@@ -1,21 +1,7 @@
 {
   "name": "royal-nails-website",
-  "version": "1.0.0",
-  "description": "Royal Nails Studio Paznokci i Urody - Profesjonalna strona internetowa salonu manicure i pedicure",
-  "keywords": [
-    "royal nails",
-    "studio paznokci",
-    "manicure",
-    "pedicure", 
-    "podologia",
-    "katowice",
-    "hybryda",
-    "żel",
-    "nail art"
-  ],
-  "author": "Royal Nails Studio",
-  "license": "MIT",
-  "homepage": ".",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -48,5 +34,17 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "homepage": ".",
+  "description": "Royal Nails - Profesjonalne studio paznokci w Katowicach",
+  "keywords": [
+    "manicure",
+    "pedicure",
+    "paznokcie",
+    "hybryda",
+    "żel",
+    "katowice",
+    "salon",
+    "royal nails"
+  ]
 }
