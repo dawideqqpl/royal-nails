@@ -1,6 +1,6 @@
 {
   "short_name": "Royal Nails",
-  "name": "Royal Nails - Studio Paznokci Katowice",
+  "name": "Royal Nails Studio Paznokci i Urody",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,7 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#e69bb9",
-  "background_color": "#ffffff"
+  "theme_color": "#e66f91",
+  "background_color": "#ffffff",
+  "description": "Profesjonalne usługi manicure, pedicure i podologii w Katowicach"
 }

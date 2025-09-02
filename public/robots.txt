@@ -1,3 +1,9 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /private/
+Allow: /
+
+Sitemap: https://royalnails.pl/sitemap.xml
+
+# Royal Nails Studio Paznokci i Urody
+# Profesjonalne usługi manicure, pedicure i podologii
+# Katowice, ul. 1 Maja 15
