@@ -1,353 +1,335 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-function App() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
+const App = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const [isVisible, setIsVisible] = useState({});
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-      
-      const sections = ['hero', 'about', 'services', 'gallery', 'contact'];
-      const scrollPosition = window.scrollY + 100;
-      
-      sections.forEach(section => {
-        const element = document.getElementById(section);
-        if (element && element.offsetTop <= scrollPosition && 
-            element.offsetTop + element.offsetHeight > scrollPosition) {
-          setActiveSection(section);
-        }
-      });
-    };
-
+    const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
-  };
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsVisible(prev => ({
+            ...prev,
+            [entry.target.id]: entry.isIntersecting
+          }));
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll('[data-animate]').forEach((el) => {
+      observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const services = [
     {
-      category: "Manicure",
-      items: [
-        { name: "Manicure hybrydowy - założenie", price: "145 zł", time: "1g" },
-        { name: "Manicure hybrydowy - uzupełnienie", price: "140 zł", time: "1g" },
-        { name: "Manicure męski", price: "100 zł", time: "45min" },
-        { name: "Usunięcie żelu/hybrydy + manicure", price: "110 zł", time: "1g" }
-      ]
-    },
-    {
       category: "Pedicure",
       items: [
-        { name: "Pedicure podologiczny", price: "190 zł", time: "1g 30min" },
-        { name: "Pedicure hybrydowy", price: "160 zł", time: "1g 30min" },
-        { name: "Pedicure męski", price: "150 zł", time: "1g" },
-        { name: "Opracowanie pękających pięt", price: "100 zł", time: "1g" }
+        { name: "Pedicure podologiczny", price: 190, time: "1g 30min" },
+        { name: "Pedicure podologiczny z hybrydą", price: 240, time: "1g 45min" },
+        { name: "Pedicure hybrydowy", price: 160, time: "1g 30min" },
+        { name: "Pedicure żelowy", price: 160, time: "1g 30min" },
+        { name: "Pedicure bez malowania", price: 140, time: "45min" },
+        { name: "Pedicure męski", price: 150, time: "1g" },
+        { name: "Opracowanie pękających pięt", price: 100, time: "1g" }
       ]
     },
     {
       category: "Stylizacja żelowa",
       items: [
-        { name: "Paznokcie żelowe z przedłużaniem", price: "180 zł", time: "2g" },
-        { name: "Żel na naturalną płytkę", price: "150 zł", time: "1g 30min" },
-        { name: "Rekonstrukcja paznokci obgryzionych", price: "190 zł", time: "2g" },
-        { name: "Uzupełnienie stylizacji żelowej", price: "165 zł", time: "1g 30min" }
+        { name: "Paznokcie żelowe z przedłużaniem", price: 180, time: "2g" },
+        { name: "Żel na naturalną płytkę (krótkie)", price: 150, time: "1g 30min" },
+        { name: "Żel na naturalną płytkę (długie)", price: 170, time: "1g 30min" },
+        { name: "Uzupełnienie stylizacji żelowej", price: 165, time: "1g 30min" },
+        { name: "Rekonstrukcja paznokci obgryzionych", price: 190, time: "2g" }
       ]
     },
     {
-      category: "Usługi specjalistyczne",
+      category: "Manicure hybrydowy",
       items: [
-        { name: "Rekonstrukcja paznokcia", price: "50 zł", time: "30min" },
-        { name: "Opracowanie paznokci zmienionych chorobowo", price: "110 zł", time: "45min" },
-        { name: "French/Babyboomer/Ombre", price: "15 zł", time: "15min" },
-        { name: "Naprawa paznokcia", price: "30 zł", time: "20min" }
+        { name: "Manicure hybrydowy – założenie", price: 145, time: "1g" },
+        { name: "Manicure hybrydowy – uzupełnienie", price: 140, time: "1g" },
+        { name: "Manicure hybrydowy po innej stylistce", price: 150, time: "1g 15min" },
+        { name: "Manicure męski", price: 100, time: "45min" }
       ]
     }
   ];
 
+  const workingHours = [
+    { day: "Poniedziałek", hours: "08:00 - 17:00" },
+    { day: "Wtorek", hours: "08:00 - 17:00" },
+    { day: "Środa", hours: "08:00 - 17:00" },
+    { day: "Czwartek", hours: "08:00 - 17:00" },
+    { day: "Piątek", hours: "08:00 - 17:00" },
+    { day: "Sobota", hours: "08:00 - 14:00" },
+    { day: "Niedziela", hours: "Zamknięte" }
+  ];
+
+  const smoothScroll = (target) => {
+    document.getElementById(target).scrollIntoView({
+      behavior: 'smooth'
+    });
+    setIsMenuOpen(false);
+  };
+
   return (
     <div className="app">
-      <nav className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}>
-        <div className="navbar__container">
-          <div className="navbar__brand">
-            <img src="/logo.png" alt="Royal Nails" className="navbar__logo" />
-            <span className="navbar__title">Royal Nails</span>
+      <nav className="nav" style={{ transform: `translateY(${scrollY > 100 ? '-5px' : '0'})` }}>
+        <div className="nav__container">
+          <div className="nav__logo">
+            <img src="/logo.png" alt="Royal Nails" className="nav__logo-img" />
+            <span className="nav__logo-text">Royal Nails</span>
           </div>
-          <ul className="navbar__menu">
-            {['hero', 'about', 'services', 'gallery', 'contact'].map(section => (
-              <li key={section}>
-                <button
-                  className={`navbar__link ${activeSection === section ? 'navbar__link--active' : ''}`}
-                  onClick={() => scrollToSection(section)}
-                >
-                  {section === 'hero' ? 'Start' : 
-                   section === 'about' ? 'O nas' :
-                   section === 'services' ? 'Usługi' :
-                   section === 'gallery' ? 'Galeria' : 'Kontakt'}
-                </button>
-              </li>
-            ))}
-          </ul>
-          <a href="https://booksy.com/pl-pl/70992_royal-nails-studio-paznokci_paznokcie_11597_katowice" 
-             className="navbar__cta" target="_blank" rel="noopener noreferrer">
-            Umów wizytę
-          </a>
+          
+          <div className={`nav__menu ${isMenuOpen ? 'nav__menu--open' : ''}`}>
+            <a href="#home" onClick={() => smoothScroll('home')} className="nav__link">Strona główna</a>
+            <a href="#about" onClick={() => smoothScroll('about')} className="nav__link">O nas</a>
+            <a href="#services" onClick={() => smoothScroll('services')} className="nav__link">Usługi</a>
+            <a href="#gallery" onClick={() => smoothScroll('gallery')} className="nav__link">Galeria</a>
+            <a href="#contact" onClick={() => smoothScroll('contact')} className="nav__link">Kontakt</a>
+          </div>
+
+          <button 
+            className={`nav__burger ${isMenuOpen ? 'nav__burger--open' : ''}`}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
       </nav>
 
-      <section id="hero" className="hero">
-        <div className="hero__background">
-          <div className="hero__overlay"></div>
-          <div><img src="/img/image_3.png" alt="Royal Nails" style={{width: "100%", height: "100%", objectFit: "cover"}} /></div>
-        </div>
-        <div className="hero__content">
-          <div className="hero__text">
-            <h1 className="hero__title">
-              <span className="hero__title-line">Royal Nails</span>
-              <span className="hero__title-line">Studio Paznokci</span>
-            </h1>
-            <p className="hero__subtitle">
-              Profesjonalna pielęgnacja dłoni i stóp w sercu Katowic. 
-              Odkryj świat pięknych i zdrowych paznokci.
-            </p>
-            <div className="hero__actions">
-              <a href="https://booksy.com/pl-pl/70992_royal-nails-studio-paznokci_paznokcie_11597_katowice" 
-                 className="hero__cta-primary" target="_blank" rel="noopener noreferrer">
-                Rezerwuj przez Booksy
-              </a>
-              <button 
-                className="hero__cta-secondary"
-                onClick={() => scrollToSection('services')}
-              >
-                Zobacz usługi
-              </button>
-            </div>
+      <main className="main">
+        <section id="home" className="hero">
+          <div className="hero__background">
+            <div>{/* TODO: Prompt: Elegant nail salon interior with modern manicure stations, soft lighting, and comfortable chairs in white and gold color scheme, Proporcje: [16:9] */}</div>
+            <div className="hero__overlay"></div>
           </div>
-        </div>
-        <div className="hero__scroll-indicator">
-          <div className="hero__scroll-arrow"></div>
-        </div>
-      </section>
-
-      <section id="about" className="about">
-        <div className="container">
-          <div className="about__grid">
-            <div className="about__content">
-              <h2 className="about__title">Dlaczego Royal Nails?</h2>
-              <p className="about__description">
-                Jesteśmy profesjonalnym studiem paznokci z wieloletnim doświadczeniem 
-                w branży beauty. Nasze podejście łączy najnowsze techniki stylizacji 
-                z indywidualną opieką nad każdym klientem.
-              </p>
-              
-              <div className="about__features">
-                <div className="about__feature">
-                  <div className="about__feature-icon">💎</div>
-                  <div className="about__feature-content">
-                    <h3>Najwyższa jakość</h3>
-                    <p>Używamy tylko sprawdzonych, profesjonalnych produktów najlepszych marek</p>
-                  </div>
-                </div>
-                
-                <div className="about__feature">
-                  <div className="about__feature-icon">👩‍⚕️</div>
-                  <div className="about__feature-content">
-                    <h3>Doświadczenie</h3>
-                    <p>Nasze stylistki posiadają certyfikaty i stale podnoszą swoje kwalifikacje</p>
-                  </div>
-                </div>
-                
-                <div className="about__feature">
-                  <div className="about__feature-icon">🧴</div>
-                  <div className="about__feature-content">
-                    <h3>Higiena i bezpieczeństwo</h3>
-                    <p>Sterylizujemy narzędzia zgodnie z najwyższymi standardami sanitarnymi</p>
-                  </div>
-                </div>
-                
-                <div className="about__feature">
-                  <div className="about__feature-icon">⏰</div>
-                  <div className="about__feature-content">
-                    <h3>Punktualność</h3>
-                    <p>Szanujemy Twój czas - wizyty zawsze odbywają się zgodnie z harmonogramem</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+          
+          <div className="hero__content">
+            <div className="hero__floating-element hero__floating-element--1"></div>
+            <div className="hero__floating-element hero__floating-element--2"></div>
             
-            <div className="about__image">
-              <div>{/* TODO: Prompt: [Professional nail technician working on client's nails in modern salon, clean and bright environment, focused on hands], Proporcje: [4:5] */}</div>
+            <h1 className="hero__title" style={{ transform: `translateY(${scrollY * 0.3}px)` }}>
+              <span className="hero__title-main">Royal Nails</span>
+              <span className="hero__title-sub">Studio Paznokci i Urody</span>
+            </h1>
+            
+            <p className="hero__description">
+              Profesjonalne usługi manicure i pedicure w sercu Katowic. 
+              Zadbamy o Twoje paznokcie z najwyższą starannością.
+            </p>
+            
+            <div className="hero__buttons">
+              <button 
+                className="btn btn--primary btn--morph"
+                onClick={() => smoothScroll('services')}
+              >
+                Nasze usługi
+              </button>
+              <a 
+                href="https://booksy.com/pl-pl/70992_royal-nails-studio-paznokci_paznokcie_11597_katowice"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--secondary btn--morph"
+              >
+                Umów wizytę
+              </a>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="services" className="services">
-        <div className="container">
-          <div className="services__header">
-            <h2 className="services__title">Nasze usługi</h2>
-            <p className="services__subtitle">
-              Kompleksowa pielęgnacja dłoni i stóp dostosowana do Twoich potrzeb
-            </p>
-          </div>
-          
-          <div className="services__grid">
-            {services.map((category, index) => (
-              <div key={index} className="services__category">
-                <h3 className="services__category-title">{category.category}</h3>
-                <div className="services__items">
-                  {category.items.map((service, serviceIndex) => (
-                    <div key={serviceIndex} className="services__item">
-                      <div className="services__item-content">
-                        <h4 className="services__item-name">{service.name}</h4>
-                        <span className="services__item-time">{service.time}</span>
-                      </div>
-                      <span className="services__item-price">{service.price}</span>
-                    </div>
-                  ))}
+        <section id="about" className="about" data-animate>
+          <div className="container">
+            <div className={`about__content ${isVisible.about ? 'animate-in' : ''}`}>
+              <div className="about__text">
+                <h2 className="section__title">O Royal Nails</h2>
+                <p className="about__description">
+                  Royal Nails to profesjonalne studio paznokci i urody, które od lat 
+                  specjalizuje się w najwyższej jakości usługach manicure i pedicure. 
+                  Nasza pasja to tworzenie pięknych, zdrowych paznokci oraz zapewnienie 
+                  niezapomnianej relaksującej atmosfery.
+                </p>
+                <div className="about__features">
+                  <div className="feature">
+                    <div className="feature__icon">✨</div>
+                    <h3 className="feature__title">Wysokiej jakości produkty</h3>
+                    <p>Używamy tylko sprawdzonych, bezpiecznych kosmetyków</p>
+                  </div>
+                  <div className="feature">
+                    <div className="feature__icon">👩‍💼</div>
+                    <h3 className="feature__title">Doświadczony zespół</h3>
+                    <p>Nasi specjaliści mają wieloletnie doświadczenie</p>
+                  </div>
+                  <div className="feature">
+                    <div className="feature__icon">🏆</div>
+                    <h3 className="feature__title">Indywidualne podejście</h3>
+                    <p>Każdy klient otrzymuje personalizowaną obsługę</p>
+                  </div>
                 </div>
               </div>
-            ))}
+              <div className="about__image">
+                <div>{/* TODO: Prompt: Professional nail technician working on client's nails in modern salon, focused hands applying nail polish, elegant and clean workspace, Proporcje: [1:1] */}</div>
+              </div>
+            </div>
           </div>
-          
-          <div className="services__cta">
-            <a href="https://booksy.com/pl-pl/70992_royal-nails-studio-paznokci_paznokcie_11597_katowice" 
-               className="services__book-button" target="_blank" rel="noopener noreferrer">
-              Zarezerwuj wizytę online
-            </a>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="gallery" className="gallery">
-        <div className="container">
-          <div className="gallery__header">
-            <h2 className="gallery__title">Nasze prace</h2>
-            <p className="gallery__subtitle">
-              Zobacz przykłady naszych realizacji i przekonaj się o jakości naszej pracy
-            </p>
-          </div>
-          
-          <div className="gallery__grid">
-            <div className="gallery__item gallery__item--large">
-              <div><img src="/img/image_2.png" alt="Royal Nails" style={{width: "100%", height: "100%", objectFit: "cover"}} /></div>
-            </div>
-            <div className="gallery__item">
-              <div>{/* TODO: Prompt: [Colorful hybrid nail polish collection, rainbow colors, glossy finish, artistic arrangement], Proporcje: [4:5] */}</div>
-            </div>
-            <div className="gallery__item">
-              <div>{/* TODO: Prompt: [Professional pedicure result, healthy toenails with pink polish, spa setting], Proporcje: [4:5] */}</div>
-            </div>
-            <div className="gallery__item gallery__item--wide">
-              <div><img src="/img/image_1.png" alt="Royal Nails" style={{width: "100%", height: "100%", objectFit: "cover"}} /></div>
-            </div>
-            <div className="gallery__item">
-              <div>{/* TODO: Prompt: [Baby boomer nail design, subtle gradient, wedding manicure, elegant and classic], Proporcje: [4:5] */}</div>
-            </div>
-            <div className="gallery__item">
-              <div>{/* TODO: Prompt: [Nail reconstruction before and after, damaged nails transformation, professional treatment], Proporcje: [4:5] */}</div>
-            </div>
-          </div>
-          
-          <div className="gallery__social">
-            <p>Więcej naszych prac znajdziesz na:</p>
-            <div className="gallery__social-links">
-              <a href="https://www.instagram.com/royal_nails_studio_paznokci/" 
-                 target="_blank" rel="noopener noreferrer" className="gallery__social-link">
-                📸 Instagram
-              </a>
-              <a href="https://www.facebook.com/p/Royal-Nails-Studio-Paznokci-i-Urody-100039030925035/" 
-                 target="_blank" rel="noopener noreferrer" className="gallery__social-link">
-                👍 Facebook
-              </a>
+        <section id="services" className="services" data-animate>
+          <div className="container">
+            <h2 className={`section__title ${isVisible.services ? 'animate-in' : ''}`}>
+              Nasze usługi
+            </h2>
+            
+            <div className="services__grid">
+              {services.map((category, categoryIndex) => (
+                <div 
+                  key={categoryIndex}
+                  className={`service-category ${isVisible.services ? 'animate-in' : ''}`}
+                  style={{ animationDelay: `${categoryIndex * 0.2}s` }}
+                >
+                  <h3 className="service-category__title">{category.category}</h3>
+                  <div className="service-category__items">
+                    {category.items.map((service, index) => (
+                      <div key={index} className="service-item">
+                        <div className="service-item__info">
+                          <h4 className="service-item__name">{service.name}</h4>
+                          <span className="service-item__time">{service.time}</span>
+                        </div>
+                        <span className="service-item__price">{service.price} zł</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="contact" className="contact">
-        <div className="container">
-          <div className="contact__grid">
-            <div className="contact__info">
-              <h2 className="contact__title">Skontaktuj się z nami</h2>
-              <p className="contact__subtitle">
-                Zapraszamy do naszego studia w centrum Katowic. Umów się na wizytę już dziś!
-              </p>
-              
-              <div className="contact__details">
-                <div className="contact__detail">
-                  <div className="contact__detail-icon">📍</div>
-                  <div className="contact__detail-content">
+        <section id="gallery" className="gallery" data-animate>
+          <div className="container">
+            <h2 className={`section__title ${isVisible.gallery ? 'animate-in' : ''}`}>
+              Galeria naszych prac
+            </h2>
+            
+            <div className="gallery__grid">
+              {[1, 2, 3, 4, 5, 6].map((item, index) => (
+                <div 
+                  key={index}
+                  className={`gallery__item ${isVisible.gallery ? 'animate-in' : ''}`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div>{/* TODO: Prompt: Beautiful nail art designs, elegant manicure with gel polish, professional nail styling, close-up of hands with perfect nails, Proporcje: [1:1] */}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="contact" data-animate>
+          <div className="container">
+            <h2 className={`section__title ${isVisible.contact ? 'animate-in' : ''}`}>
+              Kontakt
+            </h2>
+            
+            <div className="contact__content">
+              <div className={`contact__info ${isVisible.contact ? 'animate-in' : ''}`}>
+                <div className="contact__item">
+                  <div className="contact__icon">📍</div>
+                  <div>
                     <h3>Adres</h3>
                     <p>1 Maja 15<br />40-224 Katowice</p>
                   </div>
                 </div>
                 
-                <div className="contact__detail">
-                  <div className="contact__detail-icon">📞</div>
-                  <div className="contact__detail-content">
+                <div className="contact__item">
+                  <div className="contact__icon">📞</div>
+                  <div>
                     <h3>Telefon</h3>
-                    <a href="tel:732676016">732 676 016</a>
+                    <p>732 676 016</p>
                   </div>
                 </div>
                 
-                <div className="contact__detail">
-                  <div className="contact__detail-icon">⏰</div>
-                  <div className="contact__detail-content">
+                <div className="contact__item">
+                  <div className="contact__icon">🕒</div>
+                  <div>
                     <h3>Godziny otwarcia</h3>
-                    <div className="contact__hours">
-                      <p>Pon - Pt: 08:00 - 17:00</p>
-                      <p>Sobota: 08:00 - 14:00</p>
-                      <p>Niedziela: Zamknięte</p>
+                    <div className="working-hours">
+                      {workingHours.map((day, index) => (
+                        <div key={index} className="working-hours__item">
+                          <span className="day">{day.day}</span>
+                          <span className="hours">{day.hours}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
               </div>
               
-              <div className="contact__booking">
-                <h3>Umów wizytę online</h3>
-                <a href="https://booksy.com/pl-pl/70992_royal-nails-studio-paznokci_paznokcie_11597_katowice" 
-                   className="contact__booking-button" target="_blank" rel="noopener noreferrer">
-                  Booksy - Rezerwacja online
-                </a>
-              </div>
-              
-              <div className="contact__social">
-                <h3>Śledź nas</h3>
-                <div className="contact__social-links">
-                  <a href="https://www.instagram.com/royal_nails_studio_paznokci/" 
-                     target="_blank" rel="noopener noreferrer">Instagram</a>
-                  <a href="https://www.facebook.com/p/Royal-Nails-Studio-Paznokci-i-Urody-100039030925035/" 
-                     target="_blank" rel="noopener noreferrer">Facebook</a>
+              <div className={`contact__social ${isVisible.contact ? 'animate-in' : ''}`}>
+                <h3>Znajdź nas w sieci</h3>
+                <div className="social-links">
+                  <a 
+                    href="https://www.instagram.com/royal_nails_studio_paznokci/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-link"
+                  >
+                    <span className="social-icon">📷</span>
+                    Instagram
+                  </a>
+                  <a 
+                    href="https://www.facebook.com/p/Royal-Nails-Studio-Paznokci-i-Urody-100039030925035/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-link"
+                  >
+                    <span className="social-icon">👥</span>
+                    Facebook
+                  </a>
+                  <a 
+                    href="https://booksy.com/pl-pl/70992_royal-nails-studio-paznokci_paznokcie_11597_katowice"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-link social-link--booksy"
+                  >
+                    <span className="social-icon">📅</span>
+                    Umów wizytę przez Booksy
+                  </a>
                 </div>
               </div>
             </div>
-            
-            <div className="contact__map">
-              <div>{/* TODO: Prompt: [Modern nail salon storefront in urban setting, glass windows, elegant signage, welcoming entrance], Proporcje: [4:5] */}</div>
-            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <footer className="footer">
         <div className="container">
           <div className="footer__content">
-            <div className="footer__brand">
-              <img src="/logo.png" alt="Royal Nails" className="footer__logo" />
-              <span className="footer__title">Royal Nails</span>
+            <div className="footer__logo">
+              <img src="/logo.png" alt="Royal Nails" className="footer__logo-img" />
+              <span>Royal Nails Studio</span>
             </div>
             <p className="footer__text">
-              © 2024 Royal Nails Studio Paznokci. Wszystkie prawa zastrzeżone.
+              © 2024 Royal Nails Studio Paznokci i Urody. Wszystkie prawa zastrzeżone.
             </p>
           </div>
         </div>
       </footer>
     </div>
   );
-}
+};
 
 export default App;

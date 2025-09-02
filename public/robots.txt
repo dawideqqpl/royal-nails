@@ -1,5 +1,4 @@
 User-agent: *
-Disallow: /private/
 Allow: /
 
-Sitemap: https://royalnails.pl/sitemap.xml
+Sitemap: https://royal-nails.pl/sitemap.xml
