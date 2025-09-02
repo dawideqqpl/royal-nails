@@ -1,20 +1,7 @@
 {
   "name": "royal-nails",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
-  "description": "Royal Nails Studio Paznokci i Urody - Profesjonalne usługi manicure i pedicure w Katowicach",
-  "homepage": "https://royalnails.pl",
-  "author": "Royal Nails Studio",
-  "keywords": [
-    "manicure",
-    "pedicure",
-    "paznokcie",
-    "Katowice",
-    "salon urody",
-    "hybryda",
-    "żel",
-    "podologia"
-  ],
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -28,8 +15,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "analyze": "npm run build && npx serve -s build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
