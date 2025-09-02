@@ -1,11 +1,27 @@
 {
-  "name": "royal-nails-studio",
-  "version": "0.1.0",
+  "name": "royal-nails-website",
+  "version": "1.0.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://royalnails.pl",
+  "description": "Profesjonalny salon manicure i pedicure w Katowicach - Royal Nails Studio",
+  "keywords": [
+    "manicure",
+    "pedicure", 
+    "salon paznokci",
+    "stylizacja paznokci",
+    "Katowice",
+    "hybryda",
+    "żel",
+    "royal nails"
+  ],
+  "author": {
+    "name": "Royal Nails Studio",
+    "email": "kontakt@royalnails.pl",
+    "url": "https://royalnails.pl"
+  },
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -16,13 +32,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "eject": "react-scripts eject",
+    "analyze": "npm run build && npx serve -s build",
+    "lint": "eslint src/**/*.{js,jsx}",
+    "format": "prettier --write src/**/*.{js,jsx,css}"
   },
   "browserslist": {
     "production": [
@@ -36,14 +49,16 @@
       "last 1 safari version"
     ]
   },
-  "keywords": [
-    "manicure",
-    "pedicure",
-    "paznokcie",
-    "salon urody",
-    "katowice",
-    "royal nails",
-    "stylizacja paznokci"
-  ],
-  "description": "Royal Nails - Profesjonalne studio paznokci i urody w Katowicach"
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "prettier": "^2.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/royalnails/website.git"
+  },
+  "bugs": {
+    "url": "https://github.com/royalnails/website/issues"
+  },
+  "license": "MIT"
 }

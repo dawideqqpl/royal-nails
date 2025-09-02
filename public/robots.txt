@@ -1,4 +1,9 @@
 User-agent: *
+Disallow: /private/
+Disallow: /admin/
 Allow: /
 
-Sitemap: https://royal-nails.pl/sitemap.xml
+Sitemap: https://royalnails.pl/sitemap.xml
+
+# Royal Nails Studio - Salon Manicure i Pedicure Katowice
+# Najlepsze usługi stylizacji paznokci w mieście
