@@ -1,6 +1,6 @@
 {
   "short_name": "Royal Nails",
-  "name": "Royal Nails Studio Paznokci",
+  "name": "Royal Nails - Profesjonalne Studio Paznokci",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,7 +20,7 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#e69bb9",
+  "theme_color": "#e66f91",
   "background_color": "#ffffff",
-  "description": "Royal Nails - Profesjonalne studio paznokci w Katowicach"
+  "description": "Royal Nails - Profesjonalne studio paznokci w Katowicach. Manicure, pedicure, stylizacje żelowe i hybrydowe."
 }

@@ -1,4 +1,18 @@
+# https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
 
-Sitemap: https://www.royalnails.pl/sitemap.xml
+# Sitemap
+Sitemap: https://royalnails.pl/sitemap.xml
+
+# Disallow admin areas (if any)
+Disallow: /admin/
+Disallow: /private/
+
+# Allow important pages
+Allow: /
+Allow: /uslugi/
+Allow: /cennik/
+Allow: /kontakt/
+Allow: /galeria/
+Allow: /o-nas/
